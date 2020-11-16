@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.UserDaoMapper">
+    <!-- 根据主键查询-->
+    <select id="getById" resultType="com.example.demo.entity.UserEntity" parameterType="java.lang.Integer" >
+        select  *
+        from user
+        where id = #{id}
+    </select>
+
+    <!-- 根据yo-->
+    <select id="getByUserName" resultType="com.example.demo.entity.UserEntity" parameterType="java.lang.String" >
+        select  *
+        from user
+        where username = #{username}
+    </select>
+</mapper>

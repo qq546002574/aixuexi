@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.demo.mapper.JenkinsDaoMapper">
+<mapper namespace="com.example.demo.mapper.JenkinsHisDaoMapper">
     <!-- 根据主键查询-->
-    <select id="getAll" resultType="com.example.demo.entity.JenkinsEntity">
+    <select id="getAll" resultType="com.example.demo.entity.JenkinsHisEntity">
         select  *
-        from jenkins
+        from jenkins_history
     </select>
 
     <!-- 根据主键查询-->
-    <select id="getById" resultType="com.example.demo.entity.JenkinsEntity" parameterType="java.lang.Integer" >
+    <select id="getById" resultType="com.example.demo.entity.JenkinsHisEntity" parameterType="java.lang.Integer" >
         select  *
-        from jenkins
+        from jenkins_history
         where id = #{id}
     </select>
 
-    <update id="updateByObj" parameterType="com.example.demo.entity.JenkinsEntity" >
-        update jenkins
+    <update id="updateByObj" parameterType="com.example.demo.entity.JenkinsHisEntity" >
+        update jenkins_history
         <set >
             <if test="jobCurrentName != null" >
                 job_current_name = #{jobCurrentName},
@@ -42,8 +42,8 @@
         where id = #{id}
     </update>
 
-    <insert id="insert" parameterType="com.example.demo.entity.JenkinsEntity">
-        insert into jenkins
+    <insert id="insert" parameterType="com.example.demo.entity.JenkinsHisEntity">
+        insert into jenkins_history
         <set >
             <if test="jobCurrentName != null" >
                 job_current_name = #{jobCurrentName},
@@ -66,11 +66,14 @@
             <if test="deployBranch != null" >
                 deploy_branch = #{deployBranch},
             </if>
+            <if test="historyTime != null" >
+                history_time = #{historyTime},
+            </if>
         </set>
     </insert>
 
     <delete id="deleteById">
-        delete from jenkins
+        delete from jenkins_history
         where id = #{id}
     </delete>
 </mapper>

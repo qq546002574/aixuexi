@@ -24,28 +24,40 @@ public class DataResult {
     /**
      * 响应异常码详细信息
      */
-    @ApiModelProperty(value = "响应异常码详细信息", name = "msg")
+    @ApiModelProperty(value = "响应异常码详细信息", name = "message")
     private String message;
+
+    @ApiModelProperty(value = "响应异常码详细信息", name = "type")
+    private String type;
 
     @ApiModelProperty(value = "需要返回的数据", name = "data")
     private Object result;
+
+
 
     public DataResult(int code, Object data) {
         this.code = code;
         this.result = data;
         this.message=null;
+        this.type="success";
     }
 
-    public DataResult(int code, String msg, Object data) {
+    public DataResult(int code, String msg, String type, Object data) {
         this.code = code;
         this.message = msg;
         this.result = data;
+        this.type=type;
     }
 
     public DataResult(int code, String msg) {
         this.code = code;
         this.message = msg;
         this.result=null;
+        if (code != 1) {
+            this.type="error";
+        } else {
+            this.type="success";
+        }
     }
 
 
@@ -53,24 +65,28 @@ public class DataResult {
         this.code= BaseResponseCode.SUCCESS.getCode();
         this.message=BaseResponseCode.SUCCESS.getMsg();
         this.result=null;
+        this.type="success";
     }
 
     public DataResult(Object data) {
         this.result = data;
         this.code=BaseResponseCode.SUCCESS.getCode();
         this.message=BaseResponseCode.SUCCESS.getMsg();
+        this.type="success";
     }
 
     public DataResult(ResponseCodeInterface responseCodeInterface) {
         this.result = null;
         this.code = responseCodeInterface.getCode();
         this.message = responseCodeInterface.getMsg();
+        this.type="success";
     }
 
     public DataResult(ResponseCodeInterface responseCodeInterface, Object data) {
         this.result = data;
         this.code = responseCodeInterface.getCode();
         this.message = responseCodeInterface.getMsg();
+        this.type=null;
     }
     /**
      * 操作成功 data为null

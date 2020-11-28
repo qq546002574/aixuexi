@@ -11,6 +11,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *  shell写法
+ */
+
 public class TestCurl {
 
 

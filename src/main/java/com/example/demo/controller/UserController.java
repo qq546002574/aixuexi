@@ -37,4 +37,13 @@ public class UserController {
             return DataResult.fail("请求错误");
         }
     }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public DataResult logout() {
+        try {
+            return DataResult.success("退出成功");
+        } catch (Exception e) {
+            return DataResult.fail("请求错误");
+        }
+    }
 }

@@ -10,6 +10,8 @@ public interface JenkinsService {
 
     public JenkinsEntity getById(Integer id);
 
+    public JenkinsEntity doJenkins(Integer id);
+
     public int updateByObj(JenkinsEntity jenkinsEntity);
 
     public int addJenkins(JenkinsEntity jenkinsEntity);

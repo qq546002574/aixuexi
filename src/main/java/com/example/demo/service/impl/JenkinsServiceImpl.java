@@ -14,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.net.Inet4Address;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class JenkinsServiceImpl implements JenkinsService {
@@ -41,7 +43,22 @@ public class JenkinsServiceImpl implements JenkinsService {
     @Override
     public JenkinsEntity getById(Integer id) {
         JenkinsEntity jenkinsEntity = jenkinsDaoMapper.getById(id);
-//        String body = jenkinsDoService.doExchange(1,"123");
+        return jenkinsEntity;
+    }
+
+    @Override
+    public JenkinsEntity doJenkins(Integer id) {
+        JenkinsEntity jenkinsEntity = jenkinsDaoMapper.getById(id);
+        String jobName = jenkinsEntity.getJobCurrentName();
+        Map<String, String> map = new HashMap<>();
+        map.put("job_current_name", jobName);
+        map.put("tomcat_instance_name", jenkinsEntity.getTomcatInstanceName());
+        map.put("job_place", jenkinsEntity.getJobPlace());
+        map.put("war_name", jenkinsEntity.getWarName());
+        map.put("deploy_type", jenkinsEntity.getDeployType());
+        map.put("package_way", jenkinsEntity.getPackageWay());
+        map.put("deploy_branch", jenkinsEntity.getDeployBranch());
+        jenkinsDoService.doJenkins(jobName, map);
 //        System.out.println(body);
         return jenkinsEntity;
     }

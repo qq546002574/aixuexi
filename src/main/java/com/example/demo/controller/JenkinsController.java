@@ -38,7 +38,7 @@ public class JenkinsController {
     @RequestMapping(value = "/{id}/do", method = RequestMethod.POST)
     public DataResult doJenkins(@PathVariable Integer id) {
         System.out.println("id:" + id);
-        JenkinsEntity jenkinsEntity = jenkinsService.getById(id);
+        JenkinsEntity jenkinsEntity = jenkinsService.doJenkins(id);
         return DataResult.success();
     }
 

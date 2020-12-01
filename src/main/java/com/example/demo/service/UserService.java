@@ -8,4 +8,6 @@ public interface UserService {
     public UserEntity getById(Integer id);
 
     public UserEntity getByUserName(String username);
+
+    public int updatePw(Integer id, String password);
 }

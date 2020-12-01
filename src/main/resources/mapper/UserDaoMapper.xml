@@ -12,6 +12,21 @@
     <select id="getByUserName" resultType="com.example.demo.entity.UserEntity" parameterType="java.lang.String" >
         select  *
         from user
-        where username = #{username}
+        where user_name = #{username}
     </select>
+
+    <!-- 根据yo-->
+    <update id="updatePw" parameterType="java.lang.String" >
+        update user
+        <set>
+            <if test="password != null" >
+                pass_word = #{password},
+            </if>
+        </set>
+        <where>
+            <if test="id != null" >
+                id = #{id}
+            </if>
+        </where>
+    </update>
 </mapper>

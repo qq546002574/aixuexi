@@ -2,47 +2,49 @@ package com.example.demo.controller;
 
 
 import com.example.demo.common.utils.DataResult;
+import com.example.demo.entity.RoleEntity;
 import com.example.demo.entity.UserEntity;
+import com.example.demo.service.RoleService;
 import com.example.demo.service.UserService;
+import com.example.demo.vo.RoleVO;
 import com.example.demo.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/user")
 public class UserController {
+
+    @Autowired
+    private RoleService roleService;
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
-    public UserEntity getEntity(@PathVariable Integer id) {
-        System.out.println("id:" + id);
-        return userService.getById(id);
-    }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public DataResult login(UserVO userVO) {
+    @RequestMapping(value = "/roleuser", method = RequestMethod.POST)
+    public DataResult roleuser(RoleVO roleVO) {
         try {
-            System.out.println("*****"+ userVO.getUsername());
-            UserEntity userEntity = userService.getByUserName(userVO.getUsername());
-            if (userEntity.getPassword().equals(userVO.getPassword())) {
-                return DataResult.success();
-            } else {
-                return DataResult.fail("账号密码错误");
-            }
+            List<RoleEntity> list = roleService.getByRoleUser(roleVO);
+            return DataResult.success(list);
         } catch (Exception e) {
-            System.err.println("错误["+ userVO.toString()+"]");
+            e.printStackTrace();
             return DataResult.fail("请求错误");
         }
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public DataResult logout() {
+    @RequestMapping(value = "/{id}/changepw", method = RequestMethod.POST)
+    public DataResult changepw(@PathVariable Integer id, String password) {
         try {
-            return DataResult.success("退出成功");
+            System.out.println(password);
+            int updateNum = userService.updatePw(id, password);
+            System.out.println(updateNum);
+            return DataResult.success();
         } catch (Exception e) {
+            e.printStackTrace();
             return DataResult.fail("请求错误");
         }
     }

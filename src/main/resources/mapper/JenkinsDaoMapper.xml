@@ -16,7 +16,7 @@
 
     <update id="updateByObj" parameterType="com.example.demo.entity.JenkinsEntity" >
         update jenkins
-        <set >
+        <set>
             <if test="jobCurrentName != null" >
                 job_current_name = #{jobCurrentName},
             </if>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.RoleDaoMapper">
+    <!-- 根据主键查询-->
+    <select id="getById" resultType="com.example.demo.entity.RoleEntity" parameterType="java.lang.Integer" >
+        select  *
+        from role_info
+        where id = #{id}
+    </select>
+
+    <!-- 根据yo-->
+    <select id="getByUserId" resultType="com.example.demo.entity.RoleEntity" parameterType="java.lang.Integer" >
+        select  *
+        from role_info
+        where user_id = #{userId}
+    </select>
+
+    <!-- 根据yo-->
+    <select id="getByRoleUser" resultType="com.example.demo.entity.RoleEntity" parameterType="com.example.demo.entity.RoleEntity" >
+        select  t1.account,t1.role_id,t1.role_type,t1.user_id,t1.dept_id,t2.dept_type,t3.user_name
+        from role_info t1
+        LEFT JOIN dept_info t2 on t1.dept_id = t2.dept_id
+        LEFT JOIN user t3 on t1.user_id = t3.id
+        <where>
+            <if test="roleId != null" >
+                t1.role_id = #{roleId},
+            </if>
+            <if test="userId != null" >
+                t1.user_id = #{userId},
+            </if>
+            <if test="account != null" >
+                t1.account = #{account},
+            </if>
+            <if test="deptId != null" >
+                t1.dept_id = #{deptId},
+            </if>
+            <if test="roleType != null" >
+                t1.role_type = #{roleType},
+            </if>
+        </where>
+    </select>
+</mapper>

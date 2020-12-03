@@ -8,7 +8,7 @@ import java.util.List;
 
 
 public interface RoleService {
-    public RoleEntity getById(Integer id);
+    public RoleEntity getById(Integer roleId);
 
     public RoleEntity getByUserId(Integer userId);
 

@@ -39,10 +39,19 @@ public class UserController {
     @RequestMapping(value = "/{id}/changepw", method = RequestMethod.POST)
     public DataResult changepw(@PathVariable Integer id, String password) {
         try {
-            System.out.println(password);
             int updateNum = userService.updatePw(id, password);
-            System.out.println(updateNum);
             return DataResult.success();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return DataResult.fail("请求错误");
+        }
+    }
+
+    @RequestMapping(value = "/{roleId}/base", method = RequestMethod.POST)
+    public DataResult base(@PathVariable Integer roleId) {
+        try {
+            RoleEntity roleEntity = roleService.getById(roleId);
+            return DataResult.success(roleEntity);
         } catch (Exception e) {
             e.printStackTrace();
             return DataResult.fail("请求错误");

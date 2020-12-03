@@ -5,7 +5,7 @@
     <select id="getById" resultType="com.example.demo.entity.RoleEntity" parameterType="java.lang.Integer" >
         select  *
         from role_info
-        where id = #{id}
+        where role_id = #{roleId}
     </select>
 
     <!-- 根据yo-->

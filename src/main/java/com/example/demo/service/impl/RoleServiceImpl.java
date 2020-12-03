@@ -19,8 +19,8 @@ public class RoleServiceImpl implements RoleService {
     private RoleDaoMapper roleDaoMapper;
 
     @Override
-    public RoleEntity getById(Integer id) {
-        RoleEntity roleEntity = roleDaoMapper.getById(id);
+    public RoleEntity getById(Integer roleId) {
+        RoleEntity roleEntity = roleDaoMapper.getById(roleId);
         System.out.println(roleEntity);
         return roleEntity;
     }

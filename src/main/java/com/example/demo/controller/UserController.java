@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/user")
 public class UserController {
 
@@ -25,7 +26,7 @@ public class UserController {
     private UserService userService;
 
 
-    @RequestMapping(value = "/roleuser", method = RequestMethod.POST)
+    @RequestMapping(value = "/roleuser", method = {RequestMethod.POST ,RequestMethod.GET })
     public DataResult roleuser(RoleVO roleVO) {
         try {
             List<RoleEntity> list = roleService.getByRoleUser(roleVO);
@@ -36,7 +37,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/{id}/changepw", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/changepw", method = {RequestMethod.POST ,RequestMethod.GET })
     public DataResult changepw(@PathVariable Integer id, String password) {
         try {
             int updateNum = userService.updatePw(id, password);
@@ -47,7 +48,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/{roleId}/base", method = RequestMethod.POST)
+    @RequestMapping(value = "/{roleId}/base", method = {RequestMethod.POST ,RequestMethod.GET })
     public DataResult base(@PathVariable Integer roleId) {
         try {
             RoleEntity roleEntity = roleService.getById(roleId);

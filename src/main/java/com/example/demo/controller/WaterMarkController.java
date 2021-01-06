@@ -5,11 +5,13 @@ import com.example.demo.common.utils.DataResult;
 import com.example.demo.service.UserService;
 import com.example.demo.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/watermark")
 public class WaterMarkController {
 
@@ -17,7 +19,7 @@ public class WaterMarkController {
     private UserService userService;
 
 
-    @RequestMapping(value = "/filemark", method = RequestMethod.POST)
+    @RequestMapping(value = "/filemark", method = {RequestMethod.POST ,RequestMethod.GET })
     public DataResult filemark(UserVO userVO) {
         try {
             return DataResult.success();
@@ -27,7 +29,7 @@ public class WaterMarkController {
         }
     }
 
-    @RequestMapping(value = "/docmark", method = RequestMethod.POST)
+    @RequestMapping(value = "/docmark", method = {RequestMethod.POST ,RequestMethod.GET })
     public DataResult docmark(UserVO userVO) {
         try {
             return DataResult.success();
@@ -37,7 +39,7 @@ public class WaterMarkController {
         }
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    @RequestMapping(value = "/users", method = {RequestMethod.POST ,RequestMethod.GET })
     public DataResult users(UserVO userVO) {
         try {
             return DataResult.success();

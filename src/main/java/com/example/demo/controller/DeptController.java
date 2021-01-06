@@ -7,6 +7,7 @@ import com.example.demo.service.DeptService;
 import com.example.demo.service.UserService;
 import com.example.demo.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,13 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/dept")
 public class DeptController {
 
     @Autowired
     private DeptService deptService;
 
-    @RequestMapping(value = "/sub", method = RequestMethod.POST)
+    @RequestMapping(value = "/sub", method = {RequestMethod.POST ,RequestMethod.GET })
     public DataResult sub(UserVO userVO) {
         try {
             return DataResult.success();
@@ -30,7 +32,7 @@ public class DeptController {
         }
     }
 
-    @RequestMapping(value = "/docmark", method = RequestMethod.POST)
+    @RequestMapping(value = "/docmark", method = {RequestMethod.POST ,RequestMethod.GET })
     public DataResult docmark(UserVO userVO) {
         try {
             return DataResult.success();
@@ -40,7 +42,7 @@ public class DeptController {
         }
     }
 
-    @RequestMapping(value = "/refresh", method = RequestMethod.POST)
+    @RequestMapping(value = "/refresh", method = {RequestMethod.POST ,RequestMethod.GET })
     public DataResult refresh(UserVO userVO) {
         try {
             return DataResult.success();
@@ -50,7 +52,7 @@ public class DeptController {
         }
     }
 
-    @RequestMapping(value = "/tree", method = RequestMethod.POST)
+    @RequestMapping(value = "/tree", method = {RequestMethod.POST ,RequestMethod.GET })
     public DataResult tree(UserVO userVO) {
         try {
             List<DeptEntity> list = deptService.getAll();

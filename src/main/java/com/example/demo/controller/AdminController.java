@@ -10,16 +10,14 @@ import com.example.demo.entity.UserEntity;
 import com.example.demo.service.UserService;
 import com.example.demo.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/admin")
 public class AdminController {
     private Logger logger = LoggerFactory.getLogger(AdminController.class);
@@ -35,7 +33,7 @@ public class AdminController {
         return userService.getById(id);
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = {RequestMethod.POST, RequestMethod.GET })
     public DataResult login(UserVO userVO) {
         try {
             logger.info("根据token获取用户信息,token:{}", userVO.getUsername());
@@ -58,7 +56,7 @@ public class AdminController {
         }
     }
 
-    @RequestMapping(value = "/getObjectByToken", method = RequestMethod.POST)
+    @RequestMapping(value = "/getObjectByToken", method = {RequestMethod.POST ,RequestMethod.GET })
     public DataResult getObjectByToken(String token) {
         try {
             logger.info("根据token获取用户信息,token:{}", token);
@@ -79,9 +77,17 @@ public class AdminController {
         }
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public DataResult logout() {
+    @RequestMapping(value = "/logout", method = {RequestMethod.POST ,RequestMethod.GET })
+    public DataResult logout(String token) {
         try {
+            logger.info("根据token获取用户信息,token:{}", token);
+            if (token == null || token.length() < 36) {
+                logger.info("token异常,为空或非法token:{}", token);
+                return DataResult.fail("token异常,为空或非法token");
+            }
+            String decrypt = DESUtil.decrypt(token, DESUtil.CRYPTKEY);
+            String redisKey = decrypt.substring(36);
+            redisUtil.del(RedisKey.TMS_WELL_KEY + redisKey);
             return DataResult.success("退出成功");
         } catch (Exception e) {
             return DataResult.fail("请求错误");

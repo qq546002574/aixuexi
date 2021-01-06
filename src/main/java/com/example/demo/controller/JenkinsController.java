@@ -12,14 +12,12 @@ import com.example.demo.vo.UserVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/jenkins")
 public class JenkinsController {
 
@@ -29,13 +27,13 @@ public class JenkinsController {
     @Autowired
     private JenkinsHisService jenkinsHisService;
 
-    @RequestMapping(value = "/getAll", method = RequestMethod.POST)
+    @RequestMapping(value = "/getAll", method = {RequestMethod.POST ,RequestMethod.GET })
     public DataResult getAll() {
         return DataResult.success(jenkinsService.getAll());
     }
 
 
-    @RequestMapping(value = "/{id}/do", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/do", method = {RequestMethod.POST ,RequestMethod.GET })
     public DataResult doJenkins(@PathVariable Integer id) {
         System.out.println("id:" + id);
         JenkinsEntity jenkinsEntity = jenkinsService.doJenkins(id);
@@ -43,14 +41,14 @@ public class JenkinsController {
     }
 
 
-    @RequestMapping(value = "/{id}/base", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/base", method = {RequestMethod.POST ,RequestMethod.GET })
     public DataResult getJenkinsBase(@PathVariable Integer id) {
         System.out.println("id:" + id);
         JenkinsEntity jenkinsEntity = jenkinsService.getById(id);
         return DataResult.success(jenkinsEntity);
     }
 
-    @RequestMapping(value = "/updateBase", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateBase", method = {RequestMethod.POST ,RequestMethod.GET })
     public DataResult updateBase(JenkinsVO jenkinsVO) {
         try {
             System.out.println("*****"+ jenkinsVO.getId());
@@ -68,7 +66,7 @@ public class JenkinsController {
         }
     }
 
-    @RequestMapping(value = "/addJenkins", method = RequestMethod.POST)
+    @RequestMapping(value = "/addJenkins", method = {RequestMethod.POST ,RequestMethod.GET })
     public DataResult addJenkins(JenkinsVO jenkinsVO) {
         try {
             JenkinsEntity jenkinsEntity = new JenkinsEntity();
@@ -85,7 +83,7 @@ public class JenkinsController {
         }
     }
 
-    @RequestMapping(value = "/{id}/delJenkins", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/delJenkins", method = {RequestMethod.POST ,RequestMethod.GET })
     public DataResult delJenkins(@PathVariable Integer id) {
         try {
             int delNum = jenkinsService.delJenkins(id);

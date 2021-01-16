@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 根标签，对应一个Dao接口 -->
+<mapper namespace="com.example.demo.mapper.QuartzDaoMapper">
+
+    <resultMap type="com.example.demo.entity.QuartzTask" id="quartzMap">
+        <id column="job_id" property="jobId"/>
+        <result column="job_class" property="jobClass"/>
+        <result column="job_group" property="jobGroup"/>
+        <result column="job_name" property="jobName"/>
+        <result column="trigger_name" property="triggerName"/>
+        <result column="trigger_groupName" property="triggerGroupName"/>
+        <result column="cron_expr" property="cronExpr"/>
+        <result column="job_status" property="jobStatus"/>
+        <result column="start_time" property="startTime"/>
+        <result column="description" property="description"/>
+    </resultMap>
+
+
+    <insert id="saveAddQtz" parameterType="com.example.demo.entity.QuartzTask">
+        INSERT INTO quartz
+        (job_id,job_class,job_group,job_name,trigger_name,trigger_groupName,cron_expr,job_status,start_time,description)
+        VALUES(#{jobId},#{jobClass},#{jobGroup},#{jobName},#{triggerName},#{triggerGroupName},#{cronExpr},#{jobStatus},#{startTime},#{description});
+    </insert>
+
+    <select id="listQtz" resultMap="quartzMap">
+        select * from quartz;
+    </select>
+
+    <delete id="deleteQtzTask" parameterType="java.lang.Long">
+        DELETE from quartz where job_id = #{jobId};
+    </delete>
+
+    <update id="updateByObj" parameterType="com.example.demo.entity.QuartzTask" >
+        update quartz
+        <set>
+            <if test="jobClass != null" >
+                job_class = #{jobClass},
+            </if>
+            <if test="jobGroup != null" >
+                job_group = #{jobGroup},
+            </if>
+            <if test="jobName != null" >
+                job_name = #{jobName},
+            </if>
+            <if test="triggerName != null" >
+                trigger_name = #{triggerName},
+            </if>
+            <if test="triggerGroupName != null" >
+                trigger_groupName = #{triggerGroupName},
+            </if>
+            <if test="cronExpr != null" >
+                cron_expr = #{cronExpr},
+            </if>
+            <if test="jobStatus != null" >
+                job_status = #{jobStatus},
+            </if>
+            <if test="startTime != null" >
+                start_time = #{startTime},
+            </if>
+            <if test="description != null" >
+                description = #{description},
+            </if>
+        </set>
+        where job_id = #{jobId}
+    </update>
+
+    <!-- 根据主键查询-->
+    <select id="getByJobId" resultType="com.example.demo.entity.QuartzTask" parameterType="java.lang.Integer" >
+        select  *
+        from quartz
+        where job_id = #{jobId}
+    </select>
+</mapper>
